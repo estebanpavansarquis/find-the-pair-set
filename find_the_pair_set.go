@@ -4,7 +4,7 @@ import (
 	"sort"
 )
 
-type pairSet struct {
+type PairSet struct {
 	x int
 	y int
 }
@@ -21,10 +21,12 @@ func GetFindThePairSetInput() FindThePairSetInpunt {
 	}
 }
 
-func FindThePairSet(numberList []int, target int) (pairSets []pairSet) {
+func FindThePairSet(numberList []int, target int) (pairSets []PairSet) {
+	pairSets = make([]PairSet, 0)
+
 	// in order to avoid changes on the original list
 	list := make([]int, len(numberList))
-	copy(numberList, list)
+	copy(list, numberList)
 
 	// the list must be sorted in order to be processed efficiently
 	sort.Ints(list)
@@ -45,10 +47,14 @@ func FindThePairSet(numberList []int, target int) (pairSets []pairSet) {
 		}
 		if list[indexA] == list[indexB] {
 			// TODO if the rest are equals we have to add all the combinations of each other
-			pairSets = append(pairSets, pairSet{list[indexA], list[indexB]})
+			pairSets = append(pairSets, PairSet{list[indexA], list[indexB]})
+			indexA++
+			indexB--
 			break
 		}
-		pairSets = append(pairSets, pairSet{list[indexA], list[indexB]})
+		pairSets = append(pairSets, PairSet{list[indexA], list[indexB]})
+		indexA++
+		indexB--
 	}
 	return
 }
